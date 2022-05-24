@@ -1,0 +1,11 @@
+.vs/
+.vsconfig
+Jeu.sln
+Assembly-CSharp.csproj
+Assembly-CSharp.csproj.user
+Temp/
+Library/
+UserSettings/
+Logs/
+obj/
+Build/
