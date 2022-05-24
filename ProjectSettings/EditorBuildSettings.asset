@@ -17,4 +17,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Montagne.unity
     guid: 132179df1f358ec4995ee087b7f2e33f
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: e5a5909eda158e4469d95928bf1e4976, type: 2}

@@ -1,16 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Joueur : MonoBehaviour
 {
     public int speed;
     public float jumpForce;
 
+    private float mouvement;
     private Collider2D child;
-    public GameObject nuage;
-
-    private int compteur;
-    private readonly float delai = 1.5f;
-    private float time = 0;
 
     public void Start()
     {
@@ -26,21 +23,22 @@ public class Joueur : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void OnMove(InputValue value)
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-        }
+        mouvement = value.Get<float>();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space) && rigidbody.velocity.y <= 0 && child.OverlapCollider(new ContactFilter2D(), temp) == 2)
+    public void OnSaut()
+    {
+        if (rigidbody.velocity.y <= 0 && child.OverlapCollider(new ContactFilter2D(), temp) == 2)
         {
             rigidbody.AddForce(new Vector2(0, jumpForce));
         }
+    }
+
+    public void Update()
+    {
+        transform.Translate(speed * Time.deltaTime * mouvement, 0, 0);
 
         if (transform.position.y < -10)
         {
@@ -54,24 +52,6 @@ public class Joueur : MonoBehaviour
         else if (transform.position.x > 9)
         {
             transform.position = new Vector3(-8.5f, transform.position.y, transform.position.z);
-        }
-
-        if (Time.time > time + delai)
-        {
-            if (compteur < 30)
-            {
-                time = Time.time;
-                Instantiate(nuage);
-                compteur++;
-            }
-            else if (compteur == 30)
-            {
-                GameObject nuageFinal = Instantiate(nuage);
-                nuageFinal.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                nuageFinal.GetComponent<CapsuleCollider2D>().usedByEffector = false;
-                Destroy(nuageFinal.GetComponent<PlatformEffector2D>());
-                compteur++;
-            }
         }
     }
 

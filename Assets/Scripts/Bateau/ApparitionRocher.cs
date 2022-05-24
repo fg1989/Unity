@@ -5,8 +5,8 @@ public class ApparitionRocher : MonoBehaviour
 {
     public GameObject rocher;
 
-    private float delai = 0;
-    private float time = 0;
+    private float delai;
+    private float time;
 
     private List<float> spawns;
 
